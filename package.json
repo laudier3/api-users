@@ -1,0 +1,25 @@
+{
+  "name": "api-com-prisma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.ts",
+    "start": "node dist/app.js",
+    "build": "rm -f ./dist && npx tsc",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.16.2",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.0",
+    "prisma": "^4.16.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
