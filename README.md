@@ -12,7 +12,7 @@
 ## ✋🏻 Pré-requisitos
 
 - [Node.js](https://nodejs.org/en/)
-- [Yarn](classic.yarnpkg.com/en/docs/install)
+- [npm](https://docs.npmjs.com/)
 - [prisma](https://www.prisma.io/docs/getting-started/quickstart)
 
 ## 🔥 Instalação e execução
