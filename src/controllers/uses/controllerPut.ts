@@ -3,7 +3,7 @@ import { prisma } from "../../prisma_Client_Orm/prismaClient";
 import * as bcrypt from "bcrypt"
 
 export class PutProducts {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response):Promise<any>  {
     const {
       id,
       email,

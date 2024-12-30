@@ -3,7 +3,7 @@ import { prisma } from "../../prisma_Client_Orm/prismaClient";
 import * as bcrypt from "bcrypt"
 
 export class CreateProducts {
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response):Promise<any> {
 
         const {
             name,

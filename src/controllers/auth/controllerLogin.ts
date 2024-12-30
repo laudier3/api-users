@@ -4,7 +4,7 @@ import * as jwt from "jsonwebtoken";
 import { prisma } from "../../prisma_Client_Orm/prismaClient";
 
 export class ControllerLogin {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response):Promise<any>  {
     const { email, password } = request.body;
 
     console.log(email, password)

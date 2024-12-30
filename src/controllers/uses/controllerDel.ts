@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../../prisma_Client_Orm/prismaClient";
 
 export class DelProducts {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response):Promise<any>  {
     const id = request.params.id;
 
     const idExists = await prisma.user.findUnique({

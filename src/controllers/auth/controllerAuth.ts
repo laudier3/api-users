@@ -7,7 +7,7 @@ type JwtPayload = {
 }
 
 export class ControllerAuth {
-  async handle(request: Request, response: Response, next: NextFunction) {
+  async handle(request: Request, response: Response, next: NextFunction):Promise<any>  {
     //const { password } = request.body;
     const { authorization } = request.headers;
 
