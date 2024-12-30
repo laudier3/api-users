@@ -50,6 +50,12 @@ export class CreateProducts {
               email
             }
           })
+        
+          if (userExists?.email == email) {
+            return res.status(404).json({
+              msg: `O E-mail ${email} ja esta cadastrado, tente outro!`
+            })
+          }
       
 
         const cryptPass = await bcrypt.hash(password, 8)
