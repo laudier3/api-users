@@ -17,8 +17,8 @@ const loginProsucts = new ControllerLogin()
 
 router.post("/login", loginProsucts.handle)
 router.post("/user", createProsucts.handle)
+router.get("/user", lisProsucts.handle)
 router.use(authProsucts.handle, () => {
-    router.get("/user", lisProsucts.handle)
     router.put("/user", updateProsucts.handle)
     router.delete("/user/:id", deleteProsucts.handle)
 })
