@@ -8,8 +8,7 @@
     "dev2": "nodemon src/server.ts",
     "start": "node dist/app.js",
     "build": "rm -f ./dist && npx tsc",
-    "test": "jest --watchAll --passWithNoTests",
-    "vercel-build": "npx prisma migrate deploy"
+    "test": "jest --watchAll --passWithNoTests"
   },
   "keywords": [],
   "author": "",
