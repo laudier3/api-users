@@ -1,9 +1,12 @@
 {
 
+    "name": "api_users",
     "version": 2,
+    "description": "",
+    "main": "inde",
     "builds": [
         {
-            "src": "src/index.ts",
+            "src": "src/server.ts",
             "use": "@vercel/node"
         }
     ],
