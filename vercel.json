@@ -2,7 +2,6 @@
 
     "name": "api_users",
     "version": 2,
-    "description": "",
     "main": "inde",
     "builds": [
         {
