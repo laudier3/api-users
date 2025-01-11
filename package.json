@@ -9,7 +9,7 @@
     "start": "node dist/app.js",
     "build": "rm -f ./dist && npx tsc",
     "test": "jest --watchAll --passWithNoTests",
-    "vercel-build": "npx prisma migrate deploy"
+    "vercel-build": "npm i --save-dev @types/bcrypt @prisma/client @types/express-session && npx prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
