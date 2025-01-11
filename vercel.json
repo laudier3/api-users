@@ -1,18 +1,16 @@
 {
 
-    "name": "api_users",
     "version": 2,
-    "main": "inde",
     "builds": [
         {
-            "src": "src/server.ts",
+            "src": "src/index.ts",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "src/index.ts"
+            "dest": "src/router/router.ts"
         }
     ]
 }
