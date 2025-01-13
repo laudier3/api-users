@@ -3,6 +3,7 @@ import "dotenv/config"
 import session from "express-session"
 import { router } from "./router/router"
 const port: any = process.env.PORT || 3003
+//console.log("http://localhost:" + port)
 
 class App {
     public app: Application
@@ -27,7 +28,7 @@ class App {
 
     listen(port: number){
         this.app.listen(port, () => {
-            console.log("http://localhost:"+port)
+            return "http://localhost:"+port
         })
     }
 }
