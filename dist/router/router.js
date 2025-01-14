@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const express_1 = require("express");
+const controllerGet_1 = require("../controllers/uses/controllerGet");
+const controllerPost_1 = require("../controllers/uses/controllerPost");
+const controllerPut_1 = require("../controllers/uses/controllerPut");
+const controllerDel_1 = require("../controllers/uses/controllerDel");
+const controllerAuth_1 = require("../controllers/auth/controllerAuth");
+const controllerLogin_1 = require("../controllers/auth/controllerLogin");
+const router = (0, express_1.Router)();
+exports.router = router;
+const lisProsucts = new controllerGet_1.FindProducts();
+const createProsucts = new controllerPost_1.CreateProducts();
+const updateProsucts = new controllerPut_1.PutProducts();
+const deleteProsucts = new controllerDel_1.DelProducts();
+const authProsucts = new controllerAuth_1.ControllerAuth();
+const loginProsucts = new controllerLogin_1.ControllerLogin();
+router.post("/login", loginProsucts.handle);
+router.post("/user", createProsucts.handle);
+router.get("/", lisProsucts.handle);
+router.use(authProsucts.handle, () => {
+    router.put("/user", updateProsucts.handle);
+    router.delete("/user/:id", deleteProsucts.handle);
+});
