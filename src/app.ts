@@ -21,7 +21,7 @@ class App {
                 secret: 'keyboard cat',
                 resave: false,
                 saveUninitialized: true,
-                cookie: { secure: true }
+                cookie: { secure: false }
             })
         )
     }

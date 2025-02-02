@@ -7,7 +7,7 @@ export class ControllerLogin {
   async handle(request: Request, response: Response):Promise<any>  {
     const { email, password } = request.body;
 
-    console.log(email, password)
+    //console.log(email, password)
 
     const user = await prisma.user.findUnique({
       where: {
@@ -32,16 +32,25 @@ export class ControllerLogin {
     })
 
     const { password: _, ...userLogin } = user
-    const msg = { msg: "O token é valido por até 8 horas!" }
+    //const msg = { msg: "O token é valido por até 8 horas!" }
+
+    /*const userId = prisma.user.findUnique({
+      where: {
+        id: id
+      }
+
+    })*/
+
+    //console.log(response.json("A sessão foi criada..."))
 
     try {
       return response.status(202).json({msg: "Login efetuado com sucesso...",
         user: userLogin,
-        token: token,
+        token: token, 
       })
     } catch (error) {
       return error
     }
-
+    
   }
 }

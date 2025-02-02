@@ -17,6 +17,7 @@ describe("My first test", () => {
         }
         const Crete = new CreateProducts()
 
+        //Isso é a resposta
         console.log(Crete.handle)
 
         /*const response = await request(app).post("/user").send({

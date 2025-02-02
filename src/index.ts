@@ -23,6 +23,13 @@ app.use(session({
     cookie: { secure: true }
 }))
 app.use(router)
+app.use((req, res, next) => {
+    if(!req.session || !req.session.id){
+        const err = new Error("Houve um erro")
+        next(err)
+    }
+    next()
+})
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
