@@ -17,7 +17,10 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // seu frontend
+    credentials: true,               // necessário para cookies
+}))
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
