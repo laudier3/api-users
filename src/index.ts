@@ -11,12 +11,14 @@ import express from "express"
 import "dotenv/config"
 import session from "express-session"
 import cors from "cors";
+import cookieParser from 'cookie-parser'
 import { router } from "./router/router"
 
 const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors({
     origin: 'http://localhost:3000', // seu frontend
     credentials: true,               // necessário para cookies

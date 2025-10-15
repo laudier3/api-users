@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma_Client_Orm/prismaClient";
 
-export class FindProducts {
+export class FindUser {
     async handle(req: Request, res: Response): Promise<any> {
         const listProducts = await prisma.user.findMany({})
 

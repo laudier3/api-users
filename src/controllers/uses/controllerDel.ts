@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma_Client_Orm/prismaClient";
 
-export class DelProducts {
+export class DelUsers {
   async handle(request: Request, response: Response):Promise<any>  {
     const id = request.params.id;
 

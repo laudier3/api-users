@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../../prisma_Client_Orm/prismaClient";
 import * as bcrypt from "bcrypt";
 
-export class CreateProducts {
+export class CreateUsers {
   async handle(req: Request, res: Response): Promise<any> {
     const { name, age, email, phone, access, image, password } = req.body;
 

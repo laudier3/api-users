@@ -1,7 +1,7 @@
 jest.mock("../../controllers/uses/controllerPost")
 //import request from "supertest"
 //import { App } from "../../app"
-import { CreateProducts } from "../../controllers/uses/controllerPost"
+import { CreateUsers } from "../../controllers/uses/controllerPost"
 
 describe("My first test", () => {
     it("should check if create user", async () => {
@@ -15,7 +15,7 @@ describe("My first test", () => {
             "age": "20",
             "access": "Admin"
         }
-        const Crete = new CreateProducts()
+        const Crete = new CreateUsers()
 
         //Isso é a resposta
         console.log(Crete.handle)
