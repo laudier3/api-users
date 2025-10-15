@@ -1,80 +1,75 @@
 import { Request, Response } from "express";
 import { prisma } from "../../prisma_Client_Orm/prismaClient";
-import * as bcrypt from "bcrypt"
+import * as bcrypt from "bcrypt";
 
 export class CreateProducts {
-    async handle(req: Request, res: Response):Promise<any> {
+  async handle(req: Request, res: Response): Promise<any> {
+    const { name, age, email, phone, access, image, password } = req.body;
 
-        const {
-            name,
-            age,
-            email,
-            phone,
-            access,
-            image,
-            password
+    // Verifica se algum campo está ausente
+    const requiredFields = { name, age, email, phone, access, image, password };
+    const missingFields = Object.entries(requiredFields)
+      .filter(([_, value]) => value === undefined || value === null)
+      .map(([key]) => key);
 
-        } = req.body
-
-        if (
-     
-            typeof password === 'number' ||
-            typeof name === 'number' ||
-            typeof email === 'number' ||
-            typeof phone === 'number' ||
-            typeof age === 'number' ||
-            typeof image === 'number' ||
-            typeof access === 'number'
-          ){
-            return ({
-              msg: `Algum campo estar em número! Lembre-se que, todos os campos tem estar em string ok!`
-            })
-          }
-      
-          if (
-            typeof phone === 'undefined' ||
-            typeof age === 'undefined' ||
-            typeof password === 'undefined' ||
-            typeof name === 'undefined' ||
-            typeof access === 'undefined' ||
-            typeof image === 'undefined' ||
-            typeof email === 'undefined'
-          ) {
-            return ({
-              msg: `Algum campo esta faltando! Verifique novamente!`
-            })
-          }
-      
-          const userExists = await prisma.user.findUnique({
-            where: {
-              email
-            }
-          })
-        
-          if (userExists?.email == email) {
-            return res.status(404).json({
-              msg: `O E-mail ${email} ja esta cadastrado, tente outro!`
-            })
-          }
-      
-
-        const cryptPass = await bcrypt.hash(password, 8)
-
-        const createProducts = await prisma.user.create({
-            data: {
-                name,
-                age,
-                email,
-                phone,
-                access,
-                image,
-                password: cryptPass
-
-            }
-        })
-
-        console.log(createProducts.name)
-
-        return res.status(201).json({msg: "Usuario cadastrado com sucesso!", createProducts})
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        msg: `Algum campo está faltando: ${missingFields.join(", ")}`
+      });
     }
+
+    // Verifica se algum campo está vazio
+    const emptyFields = Object.entries(requiredFields)
+      .filter(([_, value]) => value.toString().trim() === "")
+      .map(([key]) => key);
+
+    if (emptyFields.length > 0) {
+      return res.status(400).json({
+        msg: `Os seguintes campos estão vazios: ${emptyFields.join(", ")}`
+      });
+    }
+
+    // Verifica se algum campo é número (todos devem ser string)
+    const numericFields = Object.entries(requiredFields)
+      .filter(([_, value]) => typeof value === "number")
+      .map(([key]) => key);
+
+    if (numericFields.length > 0) {
+      return res.status(400).json({
+        msg: `Os seguintes campos estão em número, mas devem ser string: ${numericFields.join(", ")}`
+      });
+    }
+
+    // Verifica se o e-mail já existe
+    const userExists = await prisma.user.findUnique({
+      where: { email }
+    });
+
+    if (userExists) {
+      return res.status(409).json({
+        msg: `O e-mail ${email} já está cadastrado. Tente outro!`
+      });
+    }
+
+    // Criptografa a senha
+    const cryptPass = await bcrypt.hash(password, 8);
+
+    // Cria o usuário
+    const createUser = await prisma.user.create({
+      data: {
+        name,
+        age,
+        email,
+        phone,
+        access,
+        image,
+        password: cryptPass
+      }
+    });
+
+    return res.status(201).json({
+      msg: "Usuário cadastrado com sucesso!",
+      user: createUser
+    });
+  }
 }
