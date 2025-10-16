@@ -13,9 +13,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction):
     const decoded = jwt.verify(token, process.env.APP_KEY ?? '') as { id: string }
     ;(req as any).userId = decoded.id
 
-    // 🔹 Opcional: log bonito no terminal
-    console.log(`✅ Token verificado com sucesso → userId: ${decoded.id}`)
-
+    console.log(`✅ Token verificado → userId: ${decoded.id}`)
     next()
   } catch (err) {
     console.error('❌ Erro ao verificar token:', err)

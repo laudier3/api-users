@@ -4,53 +4,47 @@ import * as jwt from "jsonwebtoken";
 import { prisma } from "../../prisma_Client_Orm/prismaClient";
 
 export class ControllerLogin {
-  async handle(request: Request, response: Response):Promise<any>  {
+  async handle(request: Request, response: Response): Promise<any> {
     const { email, password } = request.body;
 
-    //console.log(email, password)
-
+    // Busca usuário pelo email
     const user = await prisma.user.findUnique({
-      where: {
-        email
-      }
-    })
-
-    //const message = { errr: "E-mail ou senha invalida" }
+      where: { email },
+    });
 
     if (!user) {
-      return response.status(404).json({msg: "E-mail ou senha invalid!"})
+      return response.status(404).json({ msg: "E-mail ou senha inválidos!" });
     }
 
-    const verifyPass = await bcrypt.compare(password, user.password)
-
+    // Verifica senha
+    const verifyPass = await bcrypt.compare(password, user.password);
     if (!verifyPass) {
-      return response.status(404).json({msg: "E-mail ou senha invalido!"})
+      return response.status(404).json({ msg: "E-mail ou senha inválidos!" });
     }
 
+    // Gera token JWT
     const token = jwt.sign({ id: user.id }, process.env.APP_KEY ?? '', {
-      expiresIn: '8h'
-    })
+      expiresIn: '8h',
+    });
 
-    const { password: _, ...userLogin } = user
-    //const msg = { msg: "O token é valido por até 8 horas!" }
-
-    /*const userId = prisma.user.findUnique({
-      where: {
-        id: id
-      }
-
-    })*/
-
-    //console.log(response.json("A sessão foi criada..."))
+    const { password: _, ...userLogin } = user;
 
     try {
-      return response.status(202).json({msg: "Login efetuado com sucesso...",
-        user: userLogin,
-        token: token, 
-      })
+      // Envia token como cookie HTTP-only
+      response
+        .cookie('token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production' ? true : false,
+          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dias
+        })
+        .status(202)
+        .json({
+          msg: "Login efetuado com sucesso!",
+          user: userLogin,
+        });
     } catch (error) {
-      return error
+      return response.status(500).json({ msg: "Erro ao criar sessão", error });
     }
-    
   }
 }
